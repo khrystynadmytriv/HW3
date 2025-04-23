@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  app1:
+    build: ./app1
+    ports:
+      - "8000:8000"
+    networks:
+      - mynet
+
+  app2:
+    build: ./app2
+    environment:
+      - APP1_URL=http://app1:8000
+    depends_on:
+      - app1
+    ports:
+      - "8001:8001"
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
